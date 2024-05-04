@@ -55,9 +55,11 @@ const config = {
 				sm: "calc(var(--radius) - 4px)"
 			},
 			fontFamily: {
+				fredoka: ['Fredoka', 'sans-serif'],
+				lilita: ['Lilita', 'sans-serif'],
 				sans: [...fontFamily.sans]
 			}
-		}
+			}
 	},
 };
 
