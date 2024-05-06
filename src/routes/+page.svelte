@@ -1,16 +1,52 @@
 <script lang="ts">
     import QuizCard from "$lib/components/page_primitives/QuizCard.svelte";
     import Footer from "$lib/components/page_primitives/Footer.svelte";
+    import Settings from "$lib/components/page_primitives/Settings.svelte";
     import ScrollArea from "$lib/components/ui/scroll-area/scroll-area.svelte";
+    import { onMount } from 'svelte';
+    import type { KanaData, KanaSettings } from "$lib";
+
+    let data: KanaData;
+    
+    let seion = [];
+    let dakuon = [];
+    let handakuon = [];
+
+    onMount(async () => {
+        const response = await fetch('/kana.json');
+        data = await response.json();
+        
+        for (const consonant in data) {
+            for (const vowel in data[consonant]) {
+                if (data[consonant][vowel].Seion) { // @ts-ignore: It isn't bruh
+                    seion.push({ hiragana: data[consonant][vowel].Seion.Hiragana, katakana: data[consonant][vowel].Seion.Katakana, romaji: data[consonant][vowel].Seion.Romaji });
+                }
+                if (data[consonant][vowel].Dakuon) { // @ts-ignore: It isn't bruh
+                    dakuon.push({ hiragana: data[consonant][vowel].Dakuon.Hiragana, katakana: data[consonant][vowel].Dakuon.Katakana, romaji: data[consonant][vowel].Dakuon.Romaji });
+                }
+                if (data[consonant][vowel].Handakuon) { // @ts-ignore: It isn't bruh
+                    handakuon.push({ hiragana: data[consonant][vowel].Handakuon.Hiragana, katakana: data[consonant][vowel].Handakuon.Katakana, romaji: data[consonant][vowel].Handakuon.Romaji });
+                }
+            }
+        }
+        console.log(seion, dakuon, handakuon);
+    });
+    let allowProgression = false;
+    let inputElement: HTMLInputElement;
+    let currentCharacter: string = "あ";
+    let useSVG = true;
+    let hiraganaSettings: KanaSettings;
+    let katakanaSettings: KanaSettings;
 </script>
 
 <ScrollArea class='h-[100vh] w-full'>
     <div class="w-full h-[100vh] flex flex-col justify-center items-center h-full">
         <div class="w-full min-h-[100vh] grid grid-cols-1 md:grid-cols-3 gap-2 content-center items-center pt-10">
             <div>
+                <Settings {useSVG} {hiraganaSettings} {katakanaSettings}/>
             </div>
             <div class="flex items-center justify-center">
-                <QuizCard />
+                <QuizCard input={inputElement} {allowProgression} {currentCharacter}/>
             </div>
             <div>
             </div>
