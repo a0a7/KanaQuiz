@@ -40,15 +40,17 @@
 </script>
 
 <ScrollArea class='h-[100vh] w-full'>
-    <div class="w-full h-[100vh] flex flex-col justify-center items-center h-full">
-        <div class="w-full min-h-[100vh] grid grid-cols-1 md:grid-cols-3 gap-2 content-center items-center pt-10">
-            <div>
-                <Settings {useSVG} {hiraganaSettings} {katakanaSettings}/>
-            </div>
-            <div class="flex items-center justify-center">
+    <div class="w-full h-[100vh] flex flex-col h-full">
+        <!--<div class="absolute w-full text-center md:text-right">
+            <h1 class="font-lilita text-3xl md:text-[4rem] pt-4 md:pr-4 opacity-[5%]">Kana Quiz</h1>
+        </div>-->
+        <div class="w-full min-h-[100vh] grid grid-cols-1 md:grid-cols-5 gap-2 content-center items-center pt-16 md:pt-2">
+            <div class="md:col-span-1"></div>
+            <div class="flex items-center justify-center md:col-span-2">
                 <QuizCard input={inputElement} {allowProgression} {currentCharacter}/>
             </div>
-            <div>
+            <div class="flex justify-center md:col-span-2">
+                <Settings {useSVG} {hiraganaSettings} {katakanaSettings}/>
             </div>
         </div>
         <div class="grow pt-4">
