@@ -33,7 +33,7 @@
     });
     let allowProgression = false;
     let inputElement: HTMLInputElement;
-    let currentCharacter: string = "あ";
+    let currentCharacter: string = "ああ";
     let useSVG = true;
     let hiraganaSettings: KanaSettings;
     let katakanaSettings: KanaSettings;
@@ -47,10 +47,10 @@
         <div class="w-full min-h-[100vh] grid grid-cols-1 md:grid-cols-5 gap-2 content-center items-center pt-16 md:pt-2">
             <div class="md:col-span-1"></div>
             <div class="flex items-center justify-center md:col-span-2">
-                <QuizCard input={inputElement} {allowProgression} {currentCharacter}/>
+                <QuizCard input={inputElement} bind:allowProgression bind:currentCharacter {useSVG}/>
             </div>
             <div class="flex justify-center md:col-span-2">
-                <Settings {useSVG} {hiraganaSettings} {katakanaSettings}/>
+                <Settings bind:useSVG {hiraganaSettings} {katakanaSettings}/>
             </div>
         </div>
         <div class="grow pt-4">

@@ -16,6 +16,8 @@
     
     let katakanaMonographs: boolean, katakanaDigraphs: boolean, katakanaSeion: boolean, katakanaDakuon: boolean, katakanaHandakuon: boolean, 
     hiraganaMonographs: boolean = true, hiraganaDigraphs: boolean, hiraganaSeion: boolean = true, hiraganaDakuon: boolean, hiraganaHandakuon: boolean;
+
+
 </script>
 
 <Card.Root class="w-[350px]">
@@ -24,7 +26,7 @@
     </Card.Header>
     <Card.Content>
         <div class="flex items-center">
-            <Switch id="useSVG" bind:checked={useSVG} aria-labelledby="useSVG-label" />
+            <Switch id="useSVG" bind:checked={useSVG} on:click={()=>{if (!useSVG) {katakanaDigraphs = false; hiraganaDigraphs = false}}} aria-labelledby="useSVG-label" />
             <Label
             id="teuseSVGrms-label"
             for="useSVG"
@@ -48,7 +50,7 @@
                     </Label>
                 </div>
                 <div class="flex items-center">
-                    <Checkbox id="hiraganaDigraphs"bind:checked={hiraganaDigraphs} aria-labelledby="hiraganaDigraphs-label" />
+                    <Checkbox id="hiraganaDigraphs"bind:checked={hiraganaDigraphs} on:click={()=>{if (!hiraganaDigraphs) {useSVG = false}}} aria-labelledby="hiraganaDigraphs-label" />
                     <Label
                     id="hiraganaDigraphs-label"
                     for="hiraganaDigraphs"
@@ -105,7 +107,7 @@
                     </Label>
                 </div>
                 <div class="flex items-center">
-                    <Checkbox id="katakanaDigraphs"bind:checked={katakanaDigraphs} aria-labelledby="katakanaDigraphs-label" />
+                    <Checkbox id="katakanaDigraphs"bind:checked={katakanaDigraphs} on:click={()=>{if (!katakanaDigraphs) {useSVG = false}}} aria-labelledby="katakanaDigraphs-label" />
                     <Label
                     id="katakanaDigraphs-label"
                     for="katakanaDigraphs"
