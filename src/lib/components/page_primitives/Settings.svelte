@@ -11,13 +11,14 @@
   import { transformer } from "zod";
 
     export let useSVG = true;
-    export let hiraganaSettings: KanaSettings = {seion: true, dakuon: false, handakuon: false};
-    export let katakanaSettings: KanaSettings = {seion: true, dakuon: false, handakuon: false};
+    export let hiraganaSettings: KanaSettings = {seion: true, dakuon: false, handakuon: false, monographs: true, digraphs: false};
+    export let katakanaSettings: KanaSettings = {seion: false, dakuon: false, handakuon: false, monographs: false, digraphs: false};
     
     let katakanaMonographs: boolean, katakanaDigraphs: boolean, katakanaSeion: boolean, katakanaDakuon: boolean, katakanaHandakuon: boolean, 
     hiraganaMonographs: boolean = true, hiraganaDigraphs: boolean, hiraganaSeion: boolean = true, hiraganaDakuon: boolean, hiraganaHandakuon: boolean;
 
-
+    $: hiraganaSettings = {seion: hiraganaSeion, dakuon: hiraganaDakuon, handakuon: hiraganaHandakuon, monographs: hiraganaMonographs, digraphs: hiraganaDigraphs};
+    $: katakanaSettings = {seion: katakanaSeion, dakuon: katakanaDakuon, handakuon: katakanaHandakuon, monographs: katakanaMonographs, digraphs: katakanaDigraphs};
 </script>
 
 <Card.Root class="w-[350px]">
