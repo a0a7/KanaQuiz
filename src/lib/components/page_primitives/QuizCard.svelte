@@ -9,6 +9,7 @@
     export let allowProgression = false;
     export let currentCharacter: string;
     export let useSVG: boolean;
+    export let pickCharacter: () => void;
 
     let animationKey = 0;
     function restartAnimation() {
@@ -46,7 +47,7 @@
     </Card.Content>
     <Card.Footer class="flex justify-between items-center justify-center">
         {#if allowProgression}
-            <Button class="w-32" on:click={() => {allowProgression = !allowProgression}}>Next</Button>
+            <Button class="w-32" on:click={() => {allowProgression = !allowProgression; pickCharacter()}}>Next</Button>
         {:else}
             <Button class="w-32"  variant="secondary" on:click={() => {allowProgression = !allowProgression}}>Check Answer</Button>
         {/if}

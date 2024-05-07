@@ -20,4 +20,4 @@ export type KanaData = {
     };
 };
 
-export type KanaSettings = {seion: boolean, dakuon: boolean, handakuon : boolean}
+export type KanaSettings = {seion: boolean, dakuon: boolean, handakuon : boolean, monographs: boolean, digraphs: boolean}
