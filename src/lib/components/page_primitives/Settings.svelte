@@ -10,6 +10,7 @@
     import type { KanaSettings } from "$lib";
   import { transformer } from "zod";
 
+    export let pickCharacter: (a: any) => void;
     export let useSVG = true;
     export let hiraganaSettings: KanaSettings = {seion: true, dakuon: false, handakuon: false, monographs: true, digraphs: false};
     export let katakanaSettings: KanaSettings = {seion: false, dakuon: false, handakuon: false, monographs: false, digraphs: false};
@@ -26,8 +27,8 @@
         <Card.Title>Settings</Card.Title>
     </Card.Header>
     <Card.Content>
-        <div class="flex items-center">
-            <Switch id="useSVG" bind:checked={useSVG} on:click={()=>{if (!useSVG) {katakanaDigraphs = false; hiraganaDigraphs = false}}} aria-labelledby="useSVG-label" />
+        <div class="flex items-center"> 
+            <Switch id="useSVG" bind:checked={useSVG} on:click={()=>{if (!useSVG) {katakanaDigraphs = false; hiraganaDigraphs = false}; pickCharacter(false)}} aria-labelledby="useSVG-label" />
             <Label
             id="teuseSVGrms-label"
             for="useSVG"
@@ -41,7 +42,7 @@
             <h2 class="text-lg font-bold">Hiragana</h2>
             <div class="pl-2">
                 <div class="flex items-center">
-                    <Checkbox id="hiraganaMonographs"bind:checked={hiraganaMonographs} aria-labelledby="hiraganaMonographs-label" />
+                    <Checkbox id="hiraganaMonographs"bind:checked={hiraganaMonographs} onCheckedChange={()=>{if (!hiraganaSeion && !hiraganaDakuon && !hiraganaHandakuon) {hiraganaSeion = true}; pickCharacter(false, 'hiraganaMonographs')}} aria-labelledby="hiraganaMonographs-label" />
                     <Label
                     id="hiraganaMonographs-label"
                     for="hiraganaMonographs"
@@ -51,7 +52,7 @@
                     </Label>
                 </div>
                 <div class="flex items-center">
-                    <Checkbox id="hiraganaDigraphs"bind:checked={hiraganaDigraphs} on:click={()=>{if (!hiraganaDigraphs) {useSVG = false}}} aria-labelledby="hiraganaDigraphs-label" />
+                    <Checkbox id="hiraganaDigraphs"bind:checked={hiraganaDigraphs} onCheckedChange={()=>{if (!hiraganaDigraphs) {useSVG = false}; if (!hiraganaSeion && !hiraganaDakuon && !hiraganaHandakuon) {hiraganaSeion = true}; pickCharacter(false, 'hiraganaDigraphs')}} aria-labelledby="hiraganaDigraphs-label" />
                     <Label
                     id="hiraganaDigraphs-label"
                     for="hiraganaDigraphs"
@@ -62,7 +63,7 @@
                 </div>
                 <Separator class="my-2" />
                 <div class="flex items-center">
-                    <Checkbox id="hiraganaSeion"bind:checked={hiraganaSeion} aria-labelledby="hiraganaSeion-label" />
+                    <Checkbox id="hiraganaSeion"bind:checked={hiraganaSeion} onCheckedChange={()=>{pickCharacter(false, 'hiraganaSeion')}} aria-labelledby="hiraganaSeion-label" />
                     <Label
                     id="hiraganaSeion-label"
                     for="hiraganaSeion"
@@ -72,7 +73,7 @@
                     </Label>
                 </div>
                 <div class="flex items-center">
-                    <Checkbox id="hiraganaHandakuon" bind:checked={hiraganaHandakuon} aria-labelledby="hiraganaHandakuon-label" />
+                    <Checkbox id="hiraganaHandakuon" bind:checked={hiraganaHandakuon} onCheckedChange={()=>{pickCharacter(false, 'hiraganaHandakuon')}} aria-labelledby="hiraganaHandakuon-label" />
                     <Label
                     id="hiraganaHandakuon-label"
                     for="hiraganaHandakuon"
@@ -82,7 +83,7 @@
                     </Label>
                 </div>
                 <div class="flex items-center">
-                    <Checkbox id="hiraganaDakuon" bind:checked={hiraganaDakuon} aria-labelledby="hiraganaDakuon-label" class="" />
+                    <Checkbox id="hiraganaDakuon" bind:checked={hiraganaDakuon} onCheckedChange={()=>{pickCharacter(false, 'hiraganaDakuon')}} aria-labelledby="hiraganaDakuon-label" class="" />
                     <Label
                         id="hiraganaDakuon-label"
                         for="hiraganaDakuon"
@@ -98,7 +99,7 @@
             <h2 class="text-lg font-bold">Katakana</h2>
             <div class="pl-2">
                 <div class="flex items-center">
-                    <Checkbox id="katakanaMonographs"bind:checked={katakanaMonographs} aria-labelledby="katakanaMonographs-label" />
+                    <Checkbox id="katakanaMonographs"bind:checked={katakanaMonographs} onCheckedChange={()=>{if (!katakanaSeion && !katakanaDakuon && !katakanaHandakuon) {katakanaSeion = true}; pickCharacter(false, 'katakanaMonographs')}} aria-labelledby="katakanaMonographs-label" />
                     <Label
                     id="katakanaMonographs-label"
                     for="katakanaMonographs"
@@ -108,7 +109,7 @@
                     </Label>
                 </div>
                 <div class="flex items-center">
-                    <Checkbox id="katakanaDigraphs"bind:checked={katakanaDigraphs} on:click={()=>{if (!katakanaDigraphs) {useSVG = false}}} aria-labelledby="katakanaDigraphs-label" />
+                    <Checkbox id="katakanaDigraphs"bind:checked={katakanaDigraphs} onCheckedChange={()=>{if (!katakanaSeion && !katakanaDakuon && !katakanaHandakuon) {katakanaSeion = true}; if (!katakanaDigraphs) {useSVG = false}; pickCharacter(false, 'katakanaDigraphs')}} aria-labelledby="katakanaDigraphs-label" />
                     <Label
                     id="katakanaDigraphs-label"
                     for="katakanaDigraphs"
@@ -119,7 +120,7 @@
                 </div>
                 <Separator class="my-2" />
                 <div class="flex items-center">
-                    <Checkbox id="katakanaSeion"bind:checked={katakanaSeion} aria-labelledby="katakanaSeion-label" />
+                    <Checkbox id="katakanaSeion"bind:checked={katakanaSeion} onCheckedChange={()=>{pickCharacter(false, 'katakanaSeion')}} aria-labelledby="katakanaSeion-label" />
                     <Label
                     id="katakanaSeion-label"
                     for="katakanaSeion"
@@ -129,7 +130,7 @@
                     </Label>
                 </div>
                 <div class="flex items-center">
-                    <Checkbox id="katakanaHandakuon" bind:checked={katakanaHandakuon} aria-labelledby="katakanaHandakuon-label" />
+                    <Checkbox id="katakanaHandakuon" bind:checked={katakanaHandakuon} onCheckedChange={()=>{pickCharacter(false, 'katakanaHandakuon')}} aria-labelledby="katakanaHandakuon-label" />
                     <Label
                     id="katakanaHandakuon-label"
                     for="katakanaHandakuon"
@@ -139,7 +140,7 @@
                     </Label>
                 </div>
                 <div class="flex items-center">
-                    <Checkbox id="katakanaDakuon" bind:checked={katakanaDakuon} aria-labelledby="katakanaDakuon-label" class="" />
+                    <Checkbox id="katakanaDakuon" bind:checked={katakanaDakuon} onCheckedChange={() => {pickCharacter(false, 'katakanaDakuon')}} aria-labelledby="katakanaDakuon-label" class="" />
                     <Label
                         id="katakanaDakuon-label"
                         for="katakanaDakuon"
