@@ -13,16 +13,16 @@
     let handakuon: { hiragana: string; katakana: string; romaji: string; }[] = [];
     let combinedArray: { hiragana: string; katakana: string; romaji: string; }[];
     
-    let wonCharacters: string[];
+    let wonCharacters: string[] = [];
     let wonCharactersCount: number;
-    let lostCharacters: string[];
+    let lostCharacters: string[] = [];
     let lostCharactersCount: number;
     let shownCharacters: string[];
     let shownCharactersCount: number;
     let kanaLeft: number;
 
     let allowProgression = false;
-    let inputElement: HTMLInputElement;
+    let romajiInput: string;
     let currentCharacter: string;
     let useSVG = true;
     let hiraganaSettings: KanaSettings;
@@ -46,7 +46,7 @@
                 }
             }
         }
-        console.log(seion, dakuon, handakuon);
+        combinedArray = [...seion, ...dakuon, ...handakuon];
         currentCharacter = pickCharacter(true);
     });
 
@@ -81,8 +81,7 @@
     }
 
     function checkAnswer() {
-        const input = inputElement.textContent?.toLowerCase().replace(/[^a-z]/g, '').trim();
-
+        const input = romajiInput.toLowerCase().replace(/[^a-z]/g, '').trim();
         const found = combinedArray.find(item => item.hiragana === currentCharacter || item.katakana === currentCharacter);
         const romaji = found ? found.romaji : undefined;
         console.log(input, romaji)
@@ -95,12 +94,21 @@
         
         shownCharacters.push(currentCharacter)
         localStorage.setItem('shownCharacters', JSON.stringify(shownCharacters));
+        return {
+            input: input,
+            romaji: romaji,
+            hiragana: found?.hiragana,
+            katakana: found?.katakana
+        };
     }
 
     $: if (shownCharacters) {
         shownCharactersCount = shownCharacters.length; 
     }
-    $: combinedArray = [...seion, ...dakuon, ...handakuon];
+
+    $: wonCharactersCount = wonCharacters.length;
+    $: lostCharactersCount = lostCharacters.length;
+
 </script>
 
 <ScrollArea class='h-[100vh] w-full'>
@@ -111,7 +119,7 @@
         <div class="w-full min-h-[100vh] grid grid-cols-1 md:grid-cols-5 gap-2 content-center items-center pt-16 md:pt-2">
             <div class="md:col-span-1"></div>
             <div class="flex items-center justify-center md:col-span-2">
-                <QuizCard input={inputElement} bind:allowProgression bind:currentCharacter {useSVG} shownCharacters={shownCharactersCount} {kanaLeft} {pickCharacter}/>
+                <QuizCard bind:input={romajiInput} bind:allowProgression bind:currentCharacter {useSVG} shownCharacters={shownCharactersCount} {kanaLeft} {pickCharacter} {checkAnswer}/>
             </div>
             <div class="flex justify-center md:col-span-2">
                 <Settings bind:useSVG bind:hiraganaSettings bind:katakanaSettings {pickCharacter}/>

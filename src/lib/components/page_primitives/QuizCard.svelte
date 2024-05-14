@@ -1,21 +1,36 @@
 <script lang="ts">
+	import type { KanaResult } from '$lib';
     import { Button } from "$lib/components/ui/button/index.js";
     import * as Card from "$lib/components/ui/card/index.js";
     import * as Select from "$lib/components/ui/select/index.js";
     import { Input } from "$lib/components/ui/input/index.js";
     import { Label } from "$lib/components/ui/label/index.js";
-
-    export let input;
+    export let input: string;
     export let allowProgression = false;
     export let currentCharacter: string;
     export let useSVG: boolean;
     export let shownCharacters: number;
     export let kanaLeft: number;
     export let pickCharacter: (replace: boolean) => string;
+    export let checkAnswer: () => KanaResult;
 
     let animationKey = 0;
     function restartAnimation() {
         animationKey++;
+    }
+
+    function answerCheck() {
+        const answerDetails = checkAnswer();
+        if (answerDetails.input && answerDetails.romaji && answerDetails.input === answerDetails.romaji) {
+            console.log('correct')
+        } else {
+            console.log ('incorrect')
+        }
+        allowProgression = !allowProgression;
+    }
+    function progress() {
+        currentCharacter = pickCharacter(true);
+        allowProgression = !allowProgression
     }
 </script>
 
@@ -44,7 +59,7 @@
         <div class="grid w-full items-center gap-4">
             <div class="flex flex-col space-y-1.5">
                 <Label for="romaji">Answer</Label>
-                <Input id="romaji" placeholder="Romaji" bind:this={input} />
+                <Input id="romaji" placeholder="Romaji" bind:value={input} />
             </div>
             <div class="flex flex-col space-y-1.5">
                 <Label for="framework">Framework</Label>
@@ -54,9 +69,9 @@
     </Card.Content>
     <Card.Footer class="flex justify-between items-center justify-center">
         {#if allowProgression}
-            <Button class="w-32" on:click={() => {allowProgression = !allowProgression; pickCharacter(true)}}>Next</Button>
+            <Button class="w-32" on:click={progress}>Next</Button>
         {:else}
-            <Button class="w-32"  variant="secondary" on:click={() => {allowProgression = !allowProgression}}>Check Answer</Button>
+            <Button class="w-32"  variant="secondary" on:click={answerCheck}>Check Answer</Button>
         {/if}
     </Card.Footer>
 </Card.Root>

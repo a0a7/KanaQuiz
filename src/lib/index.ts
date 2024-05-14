@@ -21,3 +21,10 @@ export type KanaData = {
 };
 
 export type KanaSettings = {seion: boolean, dakuon: boolean, handakuon : boolean, monographs: boolean, digraphs: boolean}
+
+export type KanaResult = {
+    input: string | undefined;
+    romaji: string | undefined;
+    hiragana: string | undefined;
+    katakana: string | undefined;
+  };
