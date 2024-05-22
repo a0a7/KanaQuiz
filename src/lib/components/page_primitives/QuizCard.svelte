@@ -5,6 +5,7 @@
     import * as Select from "$lib/components/ui/select/index.js";
     import { Input } from "$lib/components/ui/input/index.js";
     import { Label } from "$lib/components/ui/label/index.js";
+    import * as Tooltip from '$lib/components/ui/tooltip/index.js';
     import QuestionMarkIcon from '$lib/components/QuestionMarkIcon.svelte';
     import { kanaLeftStore, wonCharactersStore, lostCharactersStore } from "$lib/index.js"
   import type { SvelteComponent } from 'svelte';
@@ -74,7 +75,14 @@
             <div class="absolute"><p>{kanaLeftDerivative} remaining</p></div>
         {/if}
         {#if wonCharactersDerivative && lostCharactersDerivative}
-        <div class="absolute right-6">{wonCharactersDerivative} / {wonCharactersDerivative + lostCharactersDerivative}</div>
+            <Tooltip.Root openDelay={50}>
+                <Tooltip.Trigger>
+                    <div class="absolute right-6">{wonCharactersDerivative} / {wonCharactersDerivative + lostCharactersDerivative}</div>
+                </Tooltip.Trigger>
+                <Tooltip.Content class="bg-card drop-shadow">
+                    <p class="text-center text-foreground">Score (# Correct / Total)</p>
+                </Tooltip.Content>
+            </Tooltip.Root>
         {/if}
         <div class="grid w-full items-center justify-center mt-2 pt-8 pb-2">
             {#if currentCharacter && currentCharacter !== ' '}
