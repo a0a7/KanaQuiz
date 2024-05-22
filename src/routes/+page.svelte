@@ -81,15 +81,19 @@
     }
 
     function checkAnswer() {
-        const input = romajiInput.toLowerCase().replace(/[^a-z]/g, '').trim();
+        const input = romajiInput ? romajiInput.toLowerCase().replace(/[^a-z]/g, '').trim() : undefined;
         const found = combinedArray.find(item => item.hiragana === currentCharacter || item.katakana === currentCharacter);
         const romaji = found ? found.romaji : undefined;
         console.log(input, romaji)
 
         if (input === romaji) {
             wonCharacters.push(currentCharacter);
+            wonCharactersCount = wonCharacters.length;
+            lostCharactersCount = lostCharacters.length;
         } else {
             lostCharacters.push(currentCharacter);
+            wonCharactersCount = wonCharacters.length;
+            lostCharactersCount = lostCharacters.length;
         }
         
         shownCharacters.push(currentCharacter)
@@ -105,11 +109,25 @@
     $: if (shownCharacters) {
         shownCharactersCount = shownCharacters.length; 
     }
-
-    $: wonCharactersCount = wonCharacters.length;
-    $: lostCharactersCount = lostCharacters.length;
-
 </script>
+<script context="module" lang="ts">
+    import fs from 'fs';
+    import path from 'path';
+    
+    export async function preload(page: any, session: any) {
+      const directoryPath = path.join(__dirname, 'svg');
+      console.log(directoryPath)
+      const files = fs.readdirSync(directoryPath);
+  
+      const preloadedFiles = files.map(file => {
+        const filePath = path.join(directoryPath, file);
+        const data = fs.readFileSync(filePath, 'utf8');
+        return { file, data };
+      });
+  
+      return { preloadedFiles };
+    }
+  </script>
 
 <ScrollArea class='h-[100vh] w-full'>
     <div class="w-full h-[100vh] flex flex-col h-full">
@@ -119,7 +137,7 @@
         <div class="w-full min-h-[100vh] grid grid-cols-1 md:grid-cols-5 gap-2 content-center items-center pt-16 md:pt-2">
             <div class="md:col-span-1"></div>
             <div class="flex items-center justify-center md:col-span-2">
-                <QuizCard bind:input={romajiInput} bind:allowProgression bind:currentCharacter {useSVG} shownCharacters={shownCharactersCount} {kanaLeft} {pickCharacter} {checkAnswer}/>
+                <QuizCard bind:input={romajiInput} bind:allowProgression bind:currentCharacter {useSVG} shownCharacters={shownCharactersCount} {kanaLeft} {wonCharactersCount} {lostCharactersCount} {pickCharacter} {checkAnswer}/>
             </div>
             <div class="flex justify-center md:col-span-2">
                 <Settings bind:useSVG bind:hiraganaSettings bind:katakanaSettings {pickCharacter}/>
