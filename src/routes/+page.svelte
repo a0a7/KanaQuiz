@@ -110,25 +110,6 @@
         shownCharactersCount = shownCharacters.length; 
     }
 </script>
-<script context="module" lang="ts">
-    import fs from 'fs';
-    import path from 'path';
-    
-    export async function preload(page: any, session: any) {
-      const directoryPath = path.join(__dirname, 'svg');
-      console.log(directoryPath)
-      const files = fs.readdirSync(directoryPath);
-  
-      const preloadedFiles = files.map(file => {
-        const filePath = path.join(directoryPath, file);
-        const data = fs.readFileSync(filePath, 'utf8');
-        return { file, data };
-      });
-  
-      return { preloadedFiles };
-    }
-  </script>
-
 <ScrollArea class='h-[100vh] w-full'>
     <div class="w-full h-[100vh] flex flex-col h-full">
         <!--<div class="absolute w-full text-center md:text-right">
