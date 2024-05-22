@@ -68,13 +68,13 @@
 </script>
 
 <Card.Root class="w-[350px]">
+    <Card.Header></Card.Header>
     <Card.Content class="relative">
         {#if kanaLeftDerivative}
             <div class="absolute"><p>{kanaLeftDerivative} remaining</p></div>
         {/if}
         {#if wonCharactersDerivative && lostCharactersDerivative}
-            <div class="absolute right-6">{wonCharactersDerivative} / {wonCharactersDerivative + lostCharactersDerivative}</div>
-            <QuestionMarkIcon content="Your total score"/>
+        <div class="absolute right-6">{wonCharactersDerivative} / {wonCharactersDerivative + lostCharactersDerivative}</div>
         {/if}
         <div class="grid w-full items-center justify-center mt-2 pt-8 pb-2">
             {#if currentCharacter && currentCharacter !== ' '}
