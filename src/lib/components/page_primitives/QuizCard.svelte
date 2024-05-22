@@ -5,6 +5,7 @@
     import * as Select from "$lib/components/ui/select/index.js";
     import { Input } from "$lib/components/ui/input/index.js";
     import { Label } from "$lib/components/ui/label/index.js";
+    import QuestionMarkIcon from '$lib/components/QuestionMarkIcon.svelte';
     import { kanaLeftStore, wonCharactersStore, lostCharactersStore } from "$lib/index.js"
     export let input: string;
     export let allowProgression = false;
@@ -69,6 +70,7 @@
         {/if}
         {#if wonCharactersDerivative && lostCharactersDerivative}
             <div class="absolute right-6">{wonCharactersDerivative} / {wonCharactersDerivative + lostCharactersDerivative}</div>
+            <QuestionMarkIcon content="Your total score"/>
         {/if}
         <div class="grid w-full items-center justify-center mt-2 pt-8 pb-2">
             {#if currentCharacter && currentCharacter !== ' '}
