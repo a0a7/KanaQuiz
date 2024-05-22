@@ -90,7 +90,7 @@
         <div class="grid w-full items-center gap-4">
             <div class="flex flex-col space-y-1.5">
                 <Label for="romaji">Answer</Label>
-                <Input id="romaji" placeholder="Romaji" bind:value={input} />
+                <Input id="romaji" placeholder="Romaji" bind:value={input} on:keydown={(event) => {if (event.key === 'Enter') {if (allowProgression) {progress()} else {answerCheck()};}}}/>
             </div>
         </div>
         </form>
