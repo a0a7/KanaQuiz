@@ -1,3 +1,5 @@
+import { writable } from 'svelte/store';
+
 export type KanaData = {
     [key: string]: {
         [key: string]: {
@@ -28,3 +30,8 @@ export type KanaResult = {
     hiragana: string | undefined;
     katakana: string | undefined;
   };
+
+export const kanaLeftStore = writable(0);
+
+export const wonCharactersStore = writable(0);
+export const lostCharactersStore = writable(0);

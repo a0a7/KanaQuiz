@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
     import { Button } from "$lib/components/ui/button/index.js";
     import * as Card from "$lib/components/ui/card/index.js";
     import * as Select from "$lib/components/ui/select/index.js";
@@ -17,8 +18,36 @@
     let katakanaMonographs: boolean, katakanaDigraphs: boolean, katakanaSeion: boolean, katakanaDakuon: boolean, katakanaHandakuon: boolean, 
     hiraganaMonographs: boolean = true, hiraganaDigraphs: boolean, hiraganaSeion: boolean = true, hiraganaDakuon: boolean, hiraganaHandakuon: boolean;
 
+    onMount(() => {
+        if (localStorage && localStorage.getItem('hiraganaSettings')) { // @ts-ignore: already checked
+            const tempHiraganaSettings = JSON.parse(localStorage.getItem('hiraganaSettings'));
+            hiraganaSeion = tempHiraganaSettings.seion;
+            hiraganaDakuon = tempHiraganaSettings.dakuon;
+            hiraganaHandakuon = tempHiraganaSettings.handakuon;
+            hiraganaMonographs = tempHiraganaSettings.monographs;
+            hiraganaDigraphs = tempHiraganaSettings.digraphs;
+        }
+
+        if (localStorage && localStorage.getItem('katakanaSettings')) { // @ts-ignore: already checked
+            const tempKatakanaSettings = JSON.parse(localStorage.getItem('katakanaSettings'));
+            katakanaSeion = tempKatakanaSettings.seion;
+            katakanaDakuon = tempKatakanaSettings.dakuon;
+            katakanaHandakuon = tempKatakanaSettings.handakuon;
+            katakanaMonographs = tempKatakanaSettings.monographs;
+            katakanaDigraphs = tempKatakanaSettings.digraphs;
+        }
+    })
+
     $: hiraganaSettings = {seion: hiraganaSeion, dakuon: hiraganaDakuon, handakuon: hiraganaHandakuon, monographs: hiraganaMonographs, digraphs: hiraganaDigraphs};
     $: katakanaSettings = {seion: katakanaSeion, dakuon: katakanaDakuon, handakuon: katakanaHandakuon, monographs: katakanaMonographs, digraphs: katakanaDigraphs};
+
+    $: if (typeof window !== 'undefined' && hiraganaSettings) {
+        localStorage.setItem('hiraganaSettings', JSON.stringify(hiraganaSettings));
+    };
+    $: if (typeof window !== 'undefined' && katakanaSettings) {
+        localStorage.setItem('katakanaSettings', JSON.stringify(katakanaSettings));
+    };
+
 </script>
 
 <Card.Root class="w-[350px]">

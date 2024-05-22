@@ -5,13 +5,14 @@
     import * as Select from "$lib/components/ui/select/index.js";
     import { Input } from "$lib/components/ui/input/index.js";
     import { Label } from "$lib/components/ui/label/index.js";
-
+    import { kanaLeftStore, wonCharactersStore, lostCharactersStore } from "$lib/index.js"
     export let input: string;
     export let allowProgression = false;
     export let currentCharacter: string;
     export let useSVG: boolean;
     export let shownCharacters: number;
     export let kanaLeft: number;
+    let kanaLeftDerivative: number, wonCharactersDerivative: number, lostCharactersDerivative: number;
     export let wonCharactersCount: number;
     export let lostCharactersCount: number;
     export let pickCharacter: (replace: boolean) => string;
@@ -46,19 +47,28 @@
         feedbackElement.innerHTML = '';
         currentCharacter = pickCharacter(true);
         allowProgression = !allowProgression
-        console.log(wonCharactersCount, lostCharactersCount)
     }
+    
+    // Store used because svelte reactivity isn't good enough here! Yay jank
+    $: if ($kanaLeftStore) { 
+        kanaLeftDerivative = $kanaLeftStore;
+    };
+
+    $: if ($wonCharactersStore) { 
+        wonCharactersDerivative = $wonCharactersStore;
+    };
+    $: if ($lostCharactersStore) { 
+        lostCharactersDerivative = $lostCharactersStore;
+    };
 </script>
 
 <Card.Root class="w-[350px]">
     <Card.Content class="relative">
-        {#if kanaLeft}
-            <div class="absolute"><p>{kanaLeft} remaining</p></div>
+        {#if kanaLeftDerivative}
+            <div class="absolute"><p>{kanaLeftDerivative} remaining</p></div>
         {/if}
-        {#if wonCharactersCount && shownCharacters}
-            <div class="absolute right-6">{wonCharactersCount} / {shownCharacters}</div>
-        {:else}
-            <div class="absolute right-6">0 / 0</div>
+        {#if wonCharactersDerivative && lostCharactersDerivative}
+            <div class="absolute right-6">{wonCharactersDerivative} / {wonCharactersDerivative + lostCharactersDerivative}</div>
         {/if}
         <div class="grid w-full items-center justify-center mt-2 pt-8 pb-2">
             {#if currentCharacter && currentCharacter !== ' '}

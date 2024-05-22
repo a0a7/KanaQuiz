@@ -3,6 +3,7 @@
     import Footer from "$lib/components/page_primitives/Footer.svelte";
     import Settings from "$lib/components/page_primitives/Settings.svelte";
     import ScrollArea from "$lib/components/ui/scroll-area/scroll-area.svelte";
+    import { kanaLeftStore, wonCharactersStore, lostCharactersStore } from "$lib/index.js"
     import { onMount } from 'svelte';
     import type { KanaData, KanaSettings } from "$lib";
 
@@ -76,7 +77,8 @@
             kanaLeft = 0;
             shownCharacters = [];
         }
-        console.log(kanaLeft)
+        // Store used because svelte reactivity isn't good enough here! Yay jank
+        kanaLeftStore.set(kanaLeft);
         return newCharacter;
     }
 
@@ -90,10 +92,14 @@
             wonCharacters.push(currentCharacter);
             wonCharactersCount = wonCharacters.length;
             lostCharactersCount = lostCharacters.length;
+            wonCharactersStore.set(wonCharactersCount);
+            lostCharactersStore.set(lostCharactersCount);
         } else {
             lostCharacters.push(currentCharacter);
             wonCharactersCount = wonCharacters.length;
             lostCharactersCount = lostCharacters.length;
+            wonCharactersStore.set(wonCharactersCount);
+            lostCharactersStore.set(lostCharactersCount);
         }
         
         shownCharacters.push(currentCharacter)
@@ -118,7 +124,7 @@
         <div class="w-full min-h-[100vh] grid grid-cols-1 md:grid-cols-5 gap-2 content-center items-center pt-16 md:pt-2">
             <div class="md:col-span-1"></div>
             <div class="flex items-center justify-center md:col-span-2">
-                <QuizCard bind:input={romajiInput} bind:allowProgression bind:currentCharacter {useSVG} shownCharacters={shownCharactersCount} {kanaLeft} {wonCharactersCount} {lostCharactersCount} {pickCharacter} {checkAnswer}/>
+                <QuizCard bind:input={romajiInput} bind:allowProgression bind:currentCharacter {useSVG} shownCharacters={shownCharactersCount} {kanaLeft} {wonCharactersCount} {lostCharactersCount} {pickCharacter} {checkAnswer} />
             </div>
             <div class="flex justify-center md:col-span-2">
                 <Settings bind:useSVG bind:hiraganaSettings bind:katakanaSettings {pickCharacter}/>
