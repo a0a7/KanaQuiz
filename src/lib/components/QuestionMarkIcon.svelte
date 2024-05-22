@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
-	import '$lib/components/sidebar/svg-styles.css';
+	import '$lib/svg-styles.css';
 
 	export let content: string | undefined;
 </script>
