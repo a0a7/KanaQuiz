@@ -8,7 +8,6 @@
     import { Label } from "$lib/components/ui/label/index.js";
     import { Separator } from "$lib/components/ui/separator/index.js";
     import type { KanaSettings } from "$lib";
-  import { transformer } from "zod";
 
     export let pickCharacter: (a: any) => void;
     export let useSVG = true;
