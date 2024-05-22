@@ -7,12 +7,14 @@
     import { Label } from "$lib/components/ui/label/index.js";
     import QuestionMarkIcon from '$lib/components/QuestionMarkIcon.svelte';
     import { kanaLeftStore, wonCharactersStore, lostCharactersStore } from "$lib/index.js"
+  import type { SvelteComponent } from 'svelte';
     export let input: string;
     export let allowProgression = false;
     export let currentCharacter: string;
     export let useSVG: boolean;
     export let shownCharacters: number;
     export let kanaLeft: number;
+    let inputElement: SvelteComponent;
     let kanaLeftDerivative: number, wonCharactersDerivative: number, lostCharactersDerivative: number;
     export let wonCharactersCount: number;
     export let lostCharactersCount: number;
@@ -42,12 +44,14 @@
             `
         }
         allowProgression = !allowProgression;
+        inputElement.focus();
     }
     function progress() {
         input = '';
         feedbackElement.innerHTML = '';
         currentCharacter = pickCharacter(true);
         allowProgression = !allowProgression
+        inputElement.focus();
     }
     
     // Store used because svelte reactivity isn't good enough here! Yay jank
@@ -92,7 +96,7 @@
         <div class="grid w-full items-center gap-4">
             <div class="flex flex-col space-y-1.5">
                 <Label for="romaji">Answer</Label>
-                <Input id="romaji" placeholder="Romaji" bind:value={input} on:keydown={(event) => {if (event.key === 'Enter') {if (allowProgression) {progress()} else {answerCheck()};}}}/>
+                <Input id="romaji" autofocus placeholder="Romaji" bind:value={input} bind:this={inputElement} on:keydown={(event) => {if (event.key === 'Enter') {if (allowProgression) {progress()} else {answerCheck()};}}}/>
             </div>
         </div>
         </form>

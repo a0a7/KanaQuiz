@@ -93,7 +93,6 @@
         const input = romajiInput ? romajiInput.toLowerCase().replace(/[^a-z]/g, '').trim() : undefined;
         const found = combinedArray.find(item => item.hiragana === currentCharacter || item.katakana === currentCharacter);
         const romaji = found ? found.romaji : undefined;
-        console.log(input, romaji)
 
         if (input === romaji) {
             wonCharacters.push(currentCharacter);
