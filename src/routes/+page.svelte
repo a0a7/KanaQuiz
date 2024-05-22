@@ -31,6 +31,13 @@
 
     onMount(async () => {
         shownCharacters = localStorage.getItem('shownCharacters') ? JSON.parse(localStorage.getItem('shownCharacters') ?? '') : [];
+        wonCharacters = localStorage.getItem('wonCharacters') ? JSON.parse(localStorage.getItem('wonCharacters') ?? '') : [];
+        lostCharacters = localStorage.getItem('lostCharacters') ? JSON.parse(localStorage.getItem('lostCharacters') ?? '') : [];
+        wonCharactersCount = wonCharacters.length ?? 0;
+        lostCharactersCount = lostCharacters.length ?? 0;
+        wonCharactersStore.set(wonCharactersCount);
+        lostCharactersStore.set(lostCharactersCount);
+
         const response = await fetch('/kana.json');
         data = await response.json();
         
@@ -90,18 +97,20 @@
 
         if (input === romaji) {
             wonCharacters.push(currentCharacter);
-            wonCharactersCount = wonCharacters.length;
-            lostCharactersCount = lostCharacters.length;
+            wonCharactersCount = wonCharacters.length ?? 0;
+            lostCharactersCount = lostCharacters.length ?? 0;
             wonCharactersStore.set(wonCharactersCount);
             lostCharactersStore.set(lostCharactersCount);
         } else {
             lostCharacters.push(currentCharacter);
-            wonCharactersCount = wonCharacters.length;
-            lostCharactersCount = lostCharacters.length;
+            wonCharactersCount = wonCharacters.length ?? 0;
+            lostCharactersCount = lostCharacters.length ?? 0;
             wonCharactersStore.set(wonCharactersCount);
             lostCharactersStore.set(lostCharactersCount);
         }
-        
+        localStorage.setItem('wonCharacters', JSON.stringify(wonCharacters));
+        localStorage.setItem('lostCharacters', JSON.stringify(lostCharacters));
+
         shownCharacters.push(currentCharacter)
         localStorage.setItem('shownCharacters', JSON.stringify(shownCharacters));
         return {
