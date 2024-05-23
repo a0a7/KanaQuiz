@@ -69,10 +69,9 @@
 </script>
 
 <Card.Root class="w-[350px]">
-    <Card.Header></Card.Header>
-    <Card.Content class="relative">
+    <Card.Content class="">
         {#if kanaLeftDerivative}
-            <div class="absolute"><p>{kanaLeftDerivative} remaining</p></div>
+            <div class="absolute pt-6"><p>{kanaLeftDerivative} remaining</p></div>
         {/if}
         {#if wonCharactersDerivative && lostCharactersDerivative}
             <Tooltip.Root openDelay={50}>
