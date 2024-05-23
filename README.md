@@ -1,6 +1,6 @@
 # <img src="https://github.com/syslev/KanaQuiz/assets/61996958/7a8cfedb-5c74-4a04-88b0-dd4fc0624002" width="24"/> Kana Trainer
 
-A feature-rich and customizable kana trainer made with Svelte.
+A feature-rich and customizable kana trainer made with Svelte. Hosted at https://kanaquiz.pages.dev
 
 ![image](https://github.com/syslev/KanaQuiz/assets/61996958/7b10bb5c-57dd-4e70-9c7c-72b7303dc402)
 
