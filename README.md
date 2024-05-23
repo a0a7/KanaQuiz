@@ -1,38 +1,9 @@
-# create-svelte
+# <img src="https://github.com/syslev/KanaQuiz/assets/61996958/7a8cfedb-5c74-4a04-88b0-dd4fc0624002" width="24"/> Kana Trainer
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+A feature-rich and customizable kana trainer made with Svelte.
 
-## Creating a project
+![image](https://github.com/syslev/KanaQuiz/assets/61996958/7b10bb5c-57dd-4e70-9c7c-72b7303dc402)
 
-If you're seeing this, you've probably already done this step. Congrats!
+![win](https://github.com/syslev/KanaQuiz/assets/61996958/d65cd40f-a0bc-49da-9b44-874392904186)
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+![lose](https://github.com/syslev/KanaQuiz/assets/61996958/7c56cdda-b22b-4154-a16f-5f0cd4475364)
