@@ -69,7 +69,7 @@
 </script>
 
 <Card.Root class="w-[350px]">
-    <Card.Content class="">
+    <Card.Content class="relative">
         {#if kanaLeftDerivative}
             <div class="absolute pt-6"><p>{kanaLeftDerivative} remaining</p></div>
         {/if}
